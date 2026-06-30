@@ -46,7 +46,7 @@ INSERT INTO orders VALUES
 select*from customers;
 select*from products;
 select*from orders;
--- Write a query that retrieves the order history for a specific customer, including the product name, order date, and total cost
+-- Write a query that retrieves the order history for a specific customer, including the order date, and total cost
 select*from orders where customer_id = 103;
 -- Write a query that retrieves the total sales for a specific product
 select products_id, sum(total_cost) as Total_Sales from orders where products_id = 201 group by products_id;
