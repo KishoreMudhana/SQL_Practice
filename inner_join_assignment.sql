@@ -1,7 +1,7 @@
 use d17;
 -- 1. WAQTD emp name and dname for all the employees who are working as salesman dept in 30.
 select ename,dname from emp inner join dept on emp.deptno=dept.deptno where emp.deptno=30 and emp.job='salesman';
-select * from emp inner join dept on emp.deptno=dept.deptno;
+
 -- 2. WAQTD emp name, job, deptno, and location of all the emp in sales.
 select ename,job,emp.deptno,loc,dname from emp inner join dept on emp.deptno=dept.deptno where dept.dname='sales';
 
