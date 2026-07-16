@@ -117,3 +117,47 @@ SELECT deptno, hiredate, COUNT(*) AS num_of_employees FROM emp GROUP BY deptno, 
 select ename from emp where sal<all(select sal from emp where ename in ('king','ford'));
 
 -- 88.WAQTD DETAILS OF EMPLOYEES WORKING NEWYORK OR CHICAGO.
+select * from emp where deptno in (select deptno from dept where loc in ('newyork','chicago'));
+
+-- 89.WAQTD NAME AND HIREDATE OF ALL THE EMPLOYEES WHO ARE HIRED BEFORE ANALYST.
+select ename,hiredate from emp where hiredate> all (select hiredate from emp where job='analyst');
+
+-- 90.WAQTD NAMES OF EMPLOYEES EARNING MORE THAN ADAMS IN RESEARCH DEPT.
+select ename from emp where sal> all (select sal from emp where ename='adams' and deptno in 
+(select deptno from dept where dname='research'));
+
+-- 91.DISPLAY ALL THE EMPLOYEES WHO ARE MANAGER'S HAVING 'K' AS THE LAST BUT ONE 
+-- CHARACTER IN NAME AND EARNING THE SALARY IN BETWEEN 2500-2851.
+select * from emp where job='manager' and ename like '%k_' and sal between 2500 and 2851;
+
+-- 92.WAQTD DETAILS OF THE EMPLOYEES ALONG WITH ANNUAL SALARY IF EMPLOYEES ARE WORKING IN DALLAS.
+select *,sal*12 as Annual_Sal from emp where deptno in (select deptno from dept where loc='dallas');
+select*from dept;
+
+-- 93.WAQTD NAMES OF EMPLOYEES IF THEY ARE EARNING MORE THAN TURNER IN DEPT 30 AND WORKING IN CHICAGO.
+select ename from emp where sal>(select sal from emp where ename='turner' and deptno=30) and deptno=
+(select deptno from dept where loc='chicago');
+
+-- 94.WAQTD NAMES OF ALL THE EMPLOYEES WHO ARE EARNING LESS THAN ANYONE OF THE ANALAYST.
+select ename from emp where sal< any (select sal from emp where job='analyst');
+
+-- 95.DISPLAY DEPARTMENT NAME OF ALL THE EMPLOYEES WHO ARE REPORTING TO BLAKE.
+select dname from dept where deptno in(select deptno from emp where  mgr=(select empno from emp where ename='blake'));
+
+-- 97.WAQTD THE DEPTNO OF EMP WHO ARE WORKING IN SALES DEPT AND THEY ARE WORKING AS MANAGER.
+select deptno from emp where deptno=(select deptno from dept where dname='sales') and job='manager';
+
+-- 98.WAQTD THE LOCATION OF THE EMPLOYEES, WHOSE DOES NOT START WITH 'S' AND HIRED DURING 80-82.
+select loc from dept where deptno in 
+(select deptno from emp where ename not like 's%' and hiredate between '1980-01-01' and '1982-12-31');
+-- or
+-- 98.WAQTD THE LOCATION OF THE EMPLOYEES, WHOSE DOES NOT START WITH 'S' AND HIRED DURING 80-82.
+select loc from dept where deptno in 
+(select deptno from emp where ename not like 's%' and year(hiredate) between 1980 and 1982);
+
+-- 99.WAQTD AVG SALARY , MAX SALARY , TOTAL SALARY NEEDED TO PAY ALL THE EMPLOYEES IN EACH JOB EXCEPT SALESMAN.
+select job,avg(sal),max(sal),sum(sal) from emp where job!='salesman' group by job ;
+
+-- 100. WAQTD THE NAMES OF THE EMP WHO HAS 2 A'S IN THEIR NAME AND WORKING IN DEPT 20 AND EARNIG SALARY IN THE 
+-- RANGE OF 1099-1500 AND HIRED BETWEEN 85-88 INTO THERESEARCH DEPT .
+select ename from emp where ename like "%A%A%" and deptno=20 and sal between 1099 and 1500 and year(hiredate) between 1985 and 1988;
